@@ -28,7 +28,7 @@ def erdos_strauss_naive(n, max_trials=1000):
     return solutions[0] if solutions else None 
  
  
-def erdos_strauss_bruteforce(n, max_range=50):
+def erdos_strauss_straight(n, max_range=50):
     for x in range(1, max_range):
         for y in range(x, max_range):
             for z in range(y, max_range):
@@ -64,7 +64,7 @@ def erdos_strauss_parametrized(n, max_y=100):
         k = n // 2
         return (k, n, n)
     if n % 4 == 1 and (n-2)%3==0:
-        return (n, (n-2)//3+1 , n*((n-2)//3+1))
+        return ((n-2)//3+1 ,n, n*((n-2)//3+1))
     start_x = n // 4 + 1
     max_x = n // 2 + 100
     for x in range(start_x, max_x):
@@ -179,26 +179,32 @@ def monte_carlo_solution(n, trials=1000000):
 
 
 
-small_n = list(range(5, 90, 10)) + [100, 101]
-medium_n = [10**4, 10**5, 10**6, 10**6+10**4, 10**6+10**5]
-large_n = [10**7, 10**8, 10**9, 10**10]
-n_values = small_n+ medium_n +  large_n
-methods = {
-    #'Прямой': erdos_strauss_bruteforce,
-    #'Наивный': erdos_strauss_naive,
-    #'Фактроизация': erdos_strauss_faction,
-    #'Параметризованный': erdos_strauss_parametrized,
-    #'Универсальный': erdos_strauss_universal,
-    'Модульный': modular_solutions,
-    'Монте-Карло': monte_carlo_solution
+#small_n = list(range(5, 90, 30)) + [100, 101,102,103]
+#medium_n = [10**4, 10**5, 10**6, 10**6+10**4, 10**6+10**5]
+#large_n = [10**7, 10**8, 10**9, 10**10]
+#n_values = small_n+ medium_n +  large_n
+#methods = {
+#    'Прямой': erdos_strauss_straight,
+#    'Наивный': erdos_strauss_naive,
+#    'Фактроизация': erdos_strauss_faction,
+#    'Параметризованный': erdos_strauss_parametrized,
+#    'Универсальный': erdos_strauss_universal,
+#    'Модульный': modular_solutions,
+#    'Монте-Карло': monte_carlo_solution
 
-}
+#}
     
-results = benchmark_methods(n_values, methods)
-plot_results(n_values, results)
+#results = benchmark_methods(n_values, methods)
+#plot_results(n_values, results)
 
 #print("\n=== Проверка гипотезы на больших числах ===")
-#for n in [10**14 + 1, 10**14 + 4, 10**14 + 7, 10**14 + 1]:
+#for n in [10**14, 10**14 + 1, 10**14 + 3,10**15, 10**15 + 1, 10**15 + 3, 10**16, 10**16 + 1, 10**16 + 3, 10**17, 10**17 + 1, 10**17 + 3 ]:
 #    solution = erdos_strauss_universal(n)
 #    valid = is_valid_solution(n, solution)
 #    print(f"n = {n}: {'✓' if valid else '✗'} {solution}")
+
+rand_arr = [random.randint(10**100, 10**101) for i in range(10)]
+for n in rand_arr:
+    solution = erdos_strauss_universal(n)
+    valid = is_valid_solution(n, solution)
+    print(f"n = {n}: {'✓' if valid else '✗'} {solution}")
